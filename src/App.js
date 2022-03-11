@@ -1,23 +1,23 @@
-import logo from "./logo.svg";
 import "./App.css";
+import { writeFile, readDir } from "@tauri-apps/api/fs";
 
 function App() {
+  const onWriteFile = async () => {
+    console.log("file written");
+    await writeFile({
+      path: "/home/carltonj2000/tauri-react.txt",
+      contents: "the file content",
+    });
+  };
+  const onReadDir = async () => {
+    const data = await readDir("/home/carltonj2000/");
+    console.log("data read", data);
+  };
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload 1.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <button onClick={onWriteFile}>Write file</button>
+      <button onClick={onReadDir}>Read Dir</button>
+      <button onClick={() => console.log("hi")}>Write console</button>
     </div>
   );
 }
